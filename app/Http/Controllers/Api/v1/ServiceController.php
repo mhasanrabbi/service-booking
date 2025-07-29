@@ -43,4 +43,15 @@ class ServiceController extends Controller
             return $this->errorLogResponse($e, 'Something went wrong while updating the service.');
         }
     }
+
+    public function destroy(Request $request, UserService $userService)
+    {
+        try {
+            $userService->destroy($request->route('id'));
+
+            return response()->json(['message' => 'Service deleted successfully.'], 200);
+        } catch (Exception $e) {
+            return $this->errorLogResponse($e, 'Something went wrong while updating the service.');
+        }
+    }
 }

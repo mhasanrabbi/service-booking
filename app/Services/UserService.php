@@ -31,4 +31,10 @@ class UserService
             return $service;
         });
     }
+
+    public function destroy($id)
+    {
+        $service = Service::findOrFail($id);
+        $service->delete();
+    }
 }
