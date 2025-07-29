@@ -1,17 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\User;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Service\CreateRequest;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use App\Services\UserService;
+use App\Traits\LogResponseErrors;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
 class ServiceController extends Controller
 {
+    use LogResponseErrors;
+
     public function index(UserService $userService)
     {
         return ServiceResource::collection($userService->all());
@@ -30,14 +33,7 @@ class ServiceController extends Controller
 
             return new ServiceResource($service);
         } catch (Exception $e) {
-            Log::error('Service create error: '.$e->getMessage(), [
-                'trace' => $e->getTraceAsString(),
-            ]);
-
-            return response()->json([
-                'message' => 'Something went wrong while creating the service.',
-                'error' => $e->getMessage(),
-            ], 500);
+            return $this->errorLogResponse($e, 'Something went wrong while creating the service.');
         }
     }
 }
