@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Enums\UserRoles;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class RegisterResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +15,8 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id, // TODO: HASHED ID
-            'name' => $this->name,
-            'email' => $this->email,
-            'role' => $this->role->label(),
+            'user' => new UserResource($this),
+            'token' => $this->createToken('Access Token')->plainTextToken,
         ];
     }
 }
