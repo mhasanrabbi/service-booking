@@ -20,16 +20,16 @@ class ServicePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Service $service): bool
+    public function update(User $user): bool
     {
-        return false;
+        return $user->role == UserRoles::ADMIN;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Service $service): bool
+    public function delete(User $user): bool
     {
-        return false;
+        return $user->role == UserRoles::ADMIN;
     }
 }

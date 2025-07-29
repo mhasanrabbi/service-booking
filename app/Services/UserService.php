@@ -20,4 +20,15 @@ class UserService
             return $service;
         });
     }
+
+    public function update($id, array $data)
+    {
+        return DB::transaction(function() use($id, $data) {
+            $service = Service::findOrFail($id);
+
+            $service->update($data);
+
+            return $service;
+        });
+    }
 }
