@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\BookingController;
+use App\Http\Controllers\Api\v1\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Api\v1\ServiceController;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -22,6 +23,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/bookings', [BookingController::class, 'index']);
     Route::post('/bookings', [BookingController::class, 'store']);
+
+    Route::get('/admin/bookings', [AdminBookingController::class, 'index']);
 });
 
 
