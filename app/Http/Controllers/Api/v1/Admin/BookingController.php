@@ -6,13 +6,10 @@ use App\Enums\UserRoles;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\BookingResource;
 use App\Models\Booking;
-use App\Traits\LogResponseErrors;
 use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
-    use LogResponseErrors;
-
     public function index()
     {
         if (Auth::user()->role !== UserRoles::ADMIN) {
@@ -21,6 +18,8 @@ class BookingController extends Controller
             ], 403);
         }
 
-       return BookingResource::collection(Booking::all());
+        $bookings = Booking::with(['user', 'service'])->get();
+
+        return BookingResource::collection($bookings);
     }
 }
