@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\BookingController;
 use App\Http\Controllers\Api\v1\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Api\v1\ServiceController;
+use App\Http\Middleware\Admin;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,9 +25,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/bookings', [BookingController::class, 'index']);
     Route::post('/bookings', [BookingController::class, 'store']);
 
-    Route::get('/admin/bookings', [AdminBookingController::class, 'index']);
+    Route::prefix('admin')
+        ->middleware([Admin::class])
+        ->group(function () {
+            Route::get('/bookings', [AdminBookingController::class, 'index']);
+        });
 });
-
 
 Route::get('test', function () {
     return response()->json(['message' => 'API v1 working!']);

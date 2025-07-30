@@ -12,12 +12,6 @@ class BookingController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->role !== UserRoles::ADMIN) {
-            return response()->json([
-                'message' => 'You are not authorize.'
-            ], 403);
-        }
-
         $bookings = Booking::with(['user', 'service'])->get();
 
         return BookingResource::collection($bookings);
