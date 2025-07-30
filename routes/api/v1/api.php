@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\AuthController;
+use App\Http\Controllers\Api\v1\BookingController;
 use App\Http\Controllers\Api\v1\ServiceController;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -18,6 +19,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/services', [ServiceController::class, 'store'])->can('create', Service::class);
     Route::put('/services/{id}', [ServiceController::class, 'update'])->can('update', Service::class);
     Route::delete('/services/{id}', [ServiceController::class, 'destroy'])->can('delete', Service::class);
+
+    Route::get('/bookings', [BookingController::class, 'index']);
+    Route::post('/bookings', [BookingController::class, 'store']);
 });
 
 
